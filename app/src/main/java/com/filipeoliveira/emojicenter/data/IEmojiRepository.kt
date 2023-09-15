@@ -7,5 +7,5 @@ interface IEmojiRepository {
     suspend fun searchEmoji(search: String) : Flow<List<Emoji>>
     suspend fun getEmojiBySlug(slug: String) : Flow<Emoji>
     suspend fun getCategoryList() : Flow<List<Category>>
-    suspend fun getEmojisByCategory(category: String) : Flow<List<Category>>
+    suspend fun getEmojisByCategory(category: String) : Flow<List<Emoji>>
 }
