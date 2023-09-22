@@ -29,7 +29,7 @@ class EmojiRemoteData @Inject constructor (
         emit(categories)
     }
 
-    override suspend fun getEmojisByCategory(category: String): Flow<List<CategoryRemote>> = flow {
+    override suspend fun getEmojisByCategory(category: String): Flow<List<EmojiRemote>> = flow {
         val emojisByCategory = service.getEmojisByCategory(category)
         emit(emojisByCategory)
     }

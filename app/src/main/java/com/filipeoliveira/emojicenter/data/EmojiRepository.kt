@@ -30,9 +30,9 @@ class EmojiRepository @Inject constructor(
         }
     }
 
-    override suspend fun getEmojisByCategory(category: String): Flow<List<Category>> = remoteData.getEmojisByCategory(category).map { list ->
+    override suspend fun getEmojisByCategory(category: String): Flow<List<Emoji>> = remoteData.getEmojisByCategory(category).map { list ->
         list.map {
-            it.toCategory()
+            it.toEmoji()
         }
     }
 }

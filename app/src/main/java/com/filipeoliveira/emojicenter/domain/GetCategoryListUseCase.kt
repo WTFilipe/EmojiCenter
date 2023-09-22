@@ -2,7 +2,6 @@ package com.filipeoliveira.emojicenter.domain
 
 import com.filipeoliveira.emojicenter.data.Category
 import com.filipeoliveira.emojicenter.data.IEmojiRepository
-import com.filipeoliveira.emojicenter.domain.Result
 import com.filipeoliveira.emojicenter.domain.errors.EmptyResponseException
 import com.filipeoliveira.emojicenter.utils.executeOrEmitErrors
 import kotlinx.coroutines.flow.Flow
