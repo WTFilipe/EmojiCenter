@@ -1,5 +1,6 @@
 package com.filipeoliveira.emojicenter.data.remote
 
+import com.filipeoliveira.emojicenter.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -11,7 +12,7 @@ import java.util.concurrent.TimeUnit
 object RetrofitConfig {
     var service: EmojiService = getEmojiService()
 
-    val apiKey = ""
+    val apiKey = BuildConfig.EMOJI_API_KEY
 
     private fun getRetrofitBuild() : Retrofit{
 
