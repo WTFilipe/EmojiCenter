@@ -1,11 +1,11 @@
-package com.filipeoliveira.emojicenter.ui
+package com.filipeoliveira.emojicenter.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.filipeoliveira.emojicenter.data.Category
 import com.filipeoliveira.emojicenter.data.Emoji
 import com.filipeoliveira.emojicenter.domain.IGetEmojisUseCase
 import com.filipeoliveira.emojicenter.domain.Result
+import com.filipeoliveira.emojicenter.ui.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,17 +15,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class EmojiViewModel @Inject constructor (
+class HomeViewModel @Inject constructor (
     private val getEmojisUseCase: IGetEmojisUseCase,
 ) : ViewModel() {
-
-    private var _categoryList = MutableStateFlow(UIState.Loading)
-    val categoryList: StateFlow<UIState<List<Category>>>
-        get() = _categoryList
-
-    private var _emojiBySlug = MutableStateFlow<UIState<Emoji>>(UIState.Loading)
-    val emojiBySlug: StateFlow<UIState<Emoji>>
-        get() = _emojiBySlug
 
     private var _emojiList = MutableStateFlow<UIState<List<Emoji>>>(UIState.Loading)
     val emojiList : StateFlow<UIState<List<Emoji>>>

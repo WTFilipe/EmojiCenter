@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">EmojiCenter</string>
+
     <string name="title_home">Home</string>
+    <string name="title_favorite">Favoritos</string>
+    <string name="title_search">Busca</string>
 </resources>

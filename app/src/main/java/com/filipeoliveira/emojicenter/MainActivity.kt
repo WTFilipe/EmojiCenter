@@ -10,19 +10,15 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.filipeoliveira.emojicenter.ui.EmojiViewModel
-import com.filipeoliveira.emojicenter.ui.activities.HomeScreen
-import com.filipeoliveira.emojicenter.ui.activities.Screens
+import com.filipeoliveira.emojicenter.ui.screens.home.HomeScreen
+import com.filipeoliveira.emojicenter.ui.screens.Screens
 import com.filipeoliveira.emojicenter.ui.components.EmojiBottomNavigation
+import com.filipeoliveira.emojicenter.ui.screens.search.SearchScreen
 import com.filipeoliveira.emojicenter.ui.theme.EmojiCenterTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-    @Inject
-    lateinit var emojiViewModel: EmojiViewModel
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,27 +27,26 @@ class MainActivity : ComponentActivity() {
             EmojiCenterTheme {
                 val navController = rememberNavController()
 
-                val screensInBottomNav = listOf(Screens.Home)
+                val screensInBottomNav = listOf(
+                    Screens.Home,
+                    Screens.Favorites,
+                    Screens.Search
+                )
 
                 Scaffold(
                     bottomBar = { EmojiBottomNavigation(navController, screensInBottomNav) }
-                ) {paddingValues ->
+                ) { paddingValues ->
                     NavHost(
                         navController = navController,
                         startDestination = Screens.Home.route,
                         modifier = Modifier.padding(paddingValues)
                     ){
-                        composable("home") { HomeScreen(viewModel = emojiViewModel) }
+                        composable(Screens.Home.route) { HomeScreen() }
+                        composable(Screens.Search.route) { SearchScreen() }
                     }
                 }
-
-
-
-
             }
         }
-
-        emojiViewModel.getEmojiList()
     }
 }
 

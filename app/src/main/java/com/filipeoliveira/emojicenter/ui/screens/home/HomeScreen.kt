@@ -1,4 +1,4 @@
-package com.filipeoliveira.emojicenter.ui.activities
+package com.filipeoliveira.emojicenter.ui.screens.home
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,11 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.filipeoliveira.emojicenter.data.Emoji
-import com.filipeoliveira.emojicenter.ui.EmojiViewModel
-import com.filipeoliveira.emojicenter.ui.HomeEmojiItemLeft
-import com.filipeoliveira.emojicenter.ui.HomeEmojiItemRight
+import com.filipeoliveira.emojicenter.ui.components.EmojiItemLeftLayout
+import com.filipeoliveira.emojicenter.ui.components.EmojiItemRightLayout
 import com.filipeoliveira.emojicenter.ui.UIState
 import com.filipeoliveira.emojicenter.ui.components.EmojiError
 import com.filipeoliveira.emojicenter.ui.components.EmojiLoading
@@ -25,7 +24,7 @@ import com.filipeoliveira.emojicenter.ui.theme.dimen16Dp
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: EmojiViewModel = viewModel()
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
 
     Surface {
@@ -56,9 +55,9 @@ fun OnSuccess(data: List<Emoji>) {
     ) {
         items(data.size){index ->
             if (index % 2 == 0){
-                HomeEmojiItemRight(emoji = data[index])
+                EmojiItemRightLayout(emoji = data[index])
             } else {
-                HomeEmojiItemLeft(emoji = data[index])
+                EmojiItemLeftLayout(emoji = data[index])
             }
 
             Spacer(modifier = Modifier.height(dimen16Dp))

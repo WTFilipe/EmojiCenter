@@ -8,7 +8,6 @@ import com.filipeoliveira.emojicenter.data.remote.IEmojiRemoteData
 import com.filipeoliveira.emojicenter.data.remote.RetrofitConfig
 import com.filipeoliveira.emojicenter.domain.GetEmojisUseCase
 import com.filipeoliveira.emojicenter.domain.IGetEmojisUseCase
-import com.filipeoliveira.emojicenter.ui.EmojiViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,11 +40,6 @@ object DataModule {
     @Singleton
     fun providesGetEmojiUseCase(repository: IEmojiRepository) : IGetEmojisUseCase {
         return GetEmojisUseCase(repository)
-    }
-
-    @Provides
-    fun providesEmojiViewModel(getEmojisUseCase: IGetEmojisUseCase) : EmojiViewModel {
-        return EmojiViewModel(getEmojisUseCase)
     }
 
 }

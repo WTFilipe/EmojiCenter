@@ -1,4 +1,4 @@
-package com.filipeoliveira.emojicenter.ui
+package com.filipeoliveira.emojicenter.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,13 +16,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.filipeoliveira.emojicenter.data.Emoji
-import com.filipeoliveira.emojicenter.ui.components.EmojiText
 import com.filipeoliveira.emojicenter.ui.theme.dimen20Dp
 import com.filipeoliveira.emojicenter.ui.theme.dimen40Dp
 import com.filipeoliveira.emojicenter.ui.theme.dimen8Dp
 
 @Composable
-fun HomeEmojiItemRight(
+fun EmojiItemRightLayout(
     modifier: Modifier = Modifier,
     emoji: Emoji
 ) {
@@ -69,7 +68,7 @@ fun HomeEmojiItemRight(
 }
 
 @Composable
-fun HomeEmojiItemLeft(
+fun EmojiItemLeftLayout(
     modifier: Modifier = Modifier,
     emoji: Emoji
 ) {
@@ -117,8 +116,8 @@ fun HomeEmojiItemLeft(
 
 @Preview
 @Composable
-fun HomeEmojiItemRightPreview() {
-    HomeEmojiItemRight(
+fun EmojiItemRightPreview() {
+    EmojiItemRightLayout(
         emoji = Emoji(
             character = "\ud83d\ude03",
             slug = "grinning-face-with-big-eyes",
@@ -129,8 +128,8 @@ fun HomeEmojiItemRightPreview() {
 
 @Preview
 @Composable
-fun HomeEmojiItemLeftPreview() {
-    HomeEmojiItemLeft(
+fun EmojiItemLeftPreview() {
+    EmojiItemLeftLayout(
         emoji = Emoji(
             character = "\ud83d\ude03",
             slug = "grinning-face-with-big-eyes",

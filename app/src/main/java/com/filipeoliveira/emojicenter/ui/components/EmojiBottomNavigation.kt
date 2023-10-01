@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.filipeoliveira.emojicenter.ui.activities.Screens
+import com.filipeoliveira.emojicenter.ui.screens.Screens
 
 @Composable
 fun EmojiBottomNavigation(
