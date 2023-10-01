@@ -104,9 +104,9 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.46.1")
 
     //Compose
+    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.activity:activity-compose:1.7.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -121,9 +121,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
 
-    //Emoji Lib for UI (backwards compatibility)
-    implementation("androidx.emoji2:emoji2:1.4.0")
-    implementation("androidx.emoji2:emoji2-views:1.4.0")
-    implementation("androidx.emoji2:emoji2-views-helper:1.4.0")
+    //Navigation - Compose
+    implementation("androidx.navigation:navigation-compose:2.7.3")
 }
 
