@@ -1,4 +1,4 @@
-package com.filipeoliveira.emojicenter
+package com.filipeoliveira.emojicenter.di
 
 import com.filipeoliveira.emojicenter.data.EmojiRepository
 import com.filipeoliveira.emojicenter.data.IEmojiRepository

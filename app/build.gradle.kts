@@ -120,5 +120,10 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
+
+    //Emoji Lib for UI (backwards compatibility)
+    implementation("androidx.emoji2:emoji2:1.4.0")
+    implementation("androidx.emoji2:emoji2-views:1.4.0")
+    implementation("androidx.emoji2:emoji2-views-helper:1.4.0")
 }
 

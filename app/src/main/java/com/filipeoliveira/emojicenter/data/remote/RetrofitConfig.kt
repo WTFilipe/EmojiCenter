@@ -12,8 +12,6 @@ import java.util.concurrent.TimeUnit
 object RetrofitConfig {
     var service: EmojiService = getEmojiService()
 
-    val apiKey = BuildConfig.EMOJI_API_KEY
-
     private fun getRetrofitBuild() : Retrofit{
 
         return Retrofit.Builder()
@@ -31,7 +29,7 @@ object RetrofitConfig {
             .connectTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
-            .addInterceptor(ApiKeyInterceptor(apiKey))
+            .addInterceptor(ApiKeyInterceptor(BuildConfig.EMOJI_API_KEY))
             .addInterceptor(interceptor)
             .build()
     }

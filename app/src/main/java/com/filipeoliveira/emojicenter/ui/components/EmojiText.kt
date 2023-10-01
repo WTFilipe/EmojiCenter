@@ -1,4 +1,4 @@
-package com.filipeoliveira.emojicenter.ui
+package com.filipeoliveira.emojicenter.ui.components
 
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
