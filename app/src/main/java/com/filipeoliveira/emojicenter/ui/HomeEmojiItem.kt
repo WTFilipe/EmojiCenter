@@ -43,7 +43,8 @@ fun HomeEmojiItemRight(
                     .weight(1F)
                     .padding(dimen8Dp),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurface
             )
             Box(
                 modifier = Modifier
@@ -106,7 +107,8 @@ fun HomeEmojiItemLeft(
                     .weight(1F)
                     .padding(dimen8Dp),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
     }
