@@ -16,7 +16,7 @@ import com.filipeoliveira.emojicenter.ui.components.EmojiItemLeftLayout
 import com.filipeoliveira.emojicenter.ui.components.EmojiItemRightLayout
 import com.filipeoliveira.emojicenter.ui.UIState
 import com.filipeoliveira.emojicenter.ui.components.EmojiError
-import com.filipeoliveira.emojicenter.ui.components.EmojiLoading
+import com.filipeoliveira.emojicenter.ui.components.EmojiItemShimmer
 import com.filipeoliveira.emojicenter.ui.components.EmojiText
 import com.filipeoliveira.emojicenter.ui.theme.EmojiCenterTheme
 import com.filipeoliveira.emojicenter.ui.theme.dimen16Dp
@@ -67,14 +67,23 @@ fun OnSuccess(data: List<Emoji>) {
 
 @Composable
 fun OnLoading(modifier: Modifier = Modifier) {
-    EmojiLoading(modifier) {
-        EmojiText(text = "Carregando")
+    LazyColumn (
+        modifier = modifier
+            .fillMaxSize()
+            .padding(
+                horizontal = dimen16Dp
+            )
+    ) {
+        items(20){
+            EmojiItemShimmer()
+            Spacer(modifier = Modifier.height(dimen16Dp))
+        }
     }
 }
 
 @Composable
 fun OnError(modifier: Modifier = Modifier, errors: Throwable) {
-    EmojiError {
+    EmojiError(modifier) {
         EmojiText(text = "Erro")
     }
 }

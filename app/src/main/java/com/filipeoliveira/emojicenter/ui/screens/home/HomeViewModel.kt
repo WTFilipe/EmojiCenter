@@ -23,7 +23,11 @@ class HomeViewModel @Inject constructor (
     val emojiList : StateFlow<UIState<List<Emoji>>>
         get() = _emojiList
 
-    fun getEmojiList() {
+    init {
+        this.getEmojiList()
+    }
+
+    private fun getEmojiList() {
         viewModelScope.launch(Dispatchers.IO) {
             _emojiList.value = UIState.Loading
             getEmojisUseCase.getEmojis()

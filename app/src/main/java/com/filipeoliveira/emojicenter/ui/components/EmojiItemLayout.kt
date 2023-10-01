@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -17,13 +18,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.filipeoliveira.emojicenter.data.Emoji
 import com.filipeoliveira.emojicenter.ui.theme.dimen20Dp
+import com.filipeoliveira.emojicenter.ui.theme.dimen30Dp
 import com.filipeoliveira.emojicenter.ui.theme.dimen40Dp
 import com.filipeoliveira.emojicenter.ui.theme.dimen8Dp
+import com.filipeoliveira.emojicenter.ui.utils.shimmerEffect
 
 @Composable
 fun EmojiItemRightLayout(
-    modifier: Modifier = Modifier,
-    emoji: Emoji
+    emoji: Emoji?,
+    modifier: Modifier = Modifier
 ) {
     Card(
         elevation = CardDefaults.cardElevation(
@@ -37,7 +40,7 @@ fun EmojiItemRightLayout(
             verticalAlignment = Alignment.CenterVertically
         ) {
             EmojiText(
-                text = emoji.unicodeName ?: "",
+                text = emoji?.unicodeName ?: "",
                 modifier = Modifier
                     .weight(1F)
                     .padding(dimen8Dp),
@@ -55,10 +58,11 @@ fun EmojiItemRightLayout(
                         ))
                     .padding(
                         horizontal = dimen20Dp,
-                        vertical = dimen8Dp)
+                        vertical = dimen8Dp
+                    )
             ) {
                 EmojiText(
-                    emoji.character ?: "",
+                    emoji?.character ?: "",
                     fontSize = 50.sp
                 )
             }
@@ -69,8 +73,8 @@ fun EmojiItemRightLayout(
 
 @Composable
 fun EmojiItemLeftLayout(
-    modifier: Modifier = Modifier,
-    emoji: Emoji
+    emoji: Emoji?,
+    modifier: Modifier = Modifier
 ) {
     Card (
       elevation = CardDefaults.cardElevation(
@@ -94,17 +98,19 @@ fun EmojiItemLeftLayout(
                     .padding(
                         horizontal = dimen20Dp,
                         vertical = dimen8Dp)
+
             ) {
                 EmojiText(
-                    emoji.character ?: "",
+                    emoji?.character ?: "",
                     fontSize = 50.sp
                 )
             }
             EmojiText(
-                text = emoji.unicodeName ?: "",
+                text = emoji?.unicodeName ?: "",
                 modifier = Modifier
                     .weight(1F)
-                    .padding(dimen8Dp),
+                    .padding(dimen8Dp)
+                ,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onBackground
@@ -113,6 +119,28 @@ fun EmojiItemLeftLayout(
     }
 }
 
+@Composable
+fun EmojiItemShimmer(){
+    Row(
+        modifier = Modifier.shimmerEffect(
+            gradientLight = MaterialTheme.colorScheme.surfaceVariant,
+            gradientDark = MaterialTheme.colorScheme.inverseOnSurface,
+        )
+            .fillMaxWidth()
+            .padding(dimen8Dp)
+    ){
+        EmojiText(
+             "",
+            fontSize = 50.sp
+        )
+    }
+}
+
+@Preview
+@Composable
+fun EmojiItemShimmerPreview() {
+    EmojiItemShimmer()
+}
 
 @Preview
 @Composable
@@ -122,7 +150,7 @@ fun EmojiItemRightPreview() {
             character = "\ud83d\ude03",
             slug = "grinning-face-with-big-eyes",
             unicodeName = "grinning face with big eyes"
-        )
+        ),
     )
 }
 
@@ -134,6 +162,6 @@ fun EmojiItemLeftPreview() {
             character = "\ud83d\ude03",
             slug = "grinning-face-with-big-eyes",
             unicodeName = "grinning face with big eyes"
-        )
+        ),
     )
 }
