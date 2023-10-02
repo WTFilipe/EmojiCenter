@@ -19,7 +19,6 @@ import com.filipeoliveira.emojicenter.domain.model.Emoji
 import com.filipeoliveira.emojicenter.ui.theme.dimen20Dp
 import com.filipeoliveira.emojicenter.ui.theme.dimen40Dp
 import com.filipeoliveira.emojicenter.ui.theme.dimen8Dp
-import com.filipeoliveira.emojicenter.ui.utils.shimmerEffect
 
 @Composable
 fun EmojiItemRightLayout(
@@ -115,29 +114,6 @@ fun EmojiItemLeftLayout(
             )
         }
     }
-}
-
-@Composable
-fun EmojiItemShimmer(){
-    Row(
-        modifier = Modifier.shimmerEffect(
-            gradientLight = MaterialTheme.colorScheme.surfaceVariant,
-            gradientDark = MaterialTheme.colorScheme.inverseOnSurface,
-        )
-            .fillMaxWidth()
-            .padding(dimen8Dp)
-    ){
-        EmojiText(
-             "",
-            fontSize = 50.sp
-        )
-    }
-}
-
-@Preview
-@Composable
-fun EmojiItemShimmerPreview() {
-    EmojiItemShimmer()
 }
 
 @Preview

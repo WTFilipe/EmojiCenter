@@ -16,42 +16,43 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.filipeoliveira.emojicenter.domain.model.Emoji
+import com.filipeoliveira.emojicenter.ui.screens.search.CategoryAndEmojis
 import com.filipeoliveira.emojicenter.ui.theme.dimen16Dp
 import com.filipeoliveira.emojicenter.ui.theme.dimen8Dp
 import com.filipeoliveira.emojicenter.ui.utils.ShimmerText
 
 @Composable
 fun EmojiCategory(
-    categoryName: String?,
-    emojiList: List<Emoji>,
+    categoryAndEmojis: CategoryAndEmojis,
     modifier: Modifier = Modifier
 ) {
+    if (categoryAndEmojis.emojisError != null) return
+
     Column(
         modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background)
     ) {
-
-        if (categoryName != null){
-            Title(modifier, categoryName)
+        if (categoryAndEmojis.title.isNotBlank()){
+            Title(modifier, categoryAndEmojis.title)
         } else {
             ShimmerText(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth(0.7f),
                 style = MaterialTheme.typography.titleLarge
             )
         }
 
         Spacer(modifier = modifier.height(dimen8Dp))
         
-        if (emojiList.isNotEmpty()) {
-            EmojiList(emojiList)
-        } else {
+        if (categoryAndEmojis.areEmojisLoading) {
             ShimmerText(
                 modifier = Modifier
                     .fillMaxWidth(),
                 fontSize = 50.sp
             )
+        } else {
+            EmojiList(emojiList = categoryAndEmojis.emojis)
         }
 
 
@@ -93,13 +94,17 @@ private fun Title(modifier: Modifier, categoryName: String?) {
 @Composable
 fun EmojiCategoryPreview() {
     EmojiCategory(
-        "Categoria",
-        List(50){
-            Emoji(
-                character = "\ud83d\ude03",
-                slug = "grinning-face-with-big-eyes",
-                unicodeName = "grinning face with big eyes"
-            )
-        }
+        CategoryAndEmojis(
+            title = "Categoria",
+            emojis = List(50){
+                Emoji(
+                    character = "\ud83d\ude03",
+                    slug = "grinning-face-with-big-eyes",
+                    unicodeName = "grinning face with big eyes"
+                )
+            },
+            areEmojisLoading = false,
+            isTitleLoading = false
+        )
     )
 }

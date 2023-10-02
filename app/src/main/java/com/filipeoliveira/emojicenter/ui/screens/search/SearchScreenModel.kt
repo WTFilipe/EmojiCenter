@@ -3,10 +3,15 @@ package com.filipeoliveira.emojicenter.ui.screens.search
 import com.filipeoliveira.emojicenter.domain.model.Emoji
 
 data class SearchScreenModel(
-    val categoriesAndEmojisList : List<CategoriesAndEmojis>
+    val categoryAndEmojisList : List<CategoryAndEmojis>,
+    val areCategoriesLoading: Boolean,
+    val error: Throwable? = null
 )
 
-data class CategoriesAndEmojis(
-    val title: String?,
-    val emojis: List<Emoji>
+data class CategoryAndEmojis(
+    val title: String,
+    val isTitleLoading: Boolean,
+    val emojis: List<Emoji>,
+    val areEmojisLoading: Boolean,
+    val emojisError: Throwable? = null
 )

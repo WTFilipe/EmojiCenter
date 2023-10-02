@@ -1,6 +1,8 @@
 package com.filipeoliveira.emojicenter.ui.screens.search
 
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
@@ -8,10 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.filipeoliveira.emojicenter.domain.model.Category
-import com.filipeoliveira.emojicenter.ui.UIState
 import com.filipeoliveira.emojicenter.ui.components.EmojiCategory
 import com.filipeoliveira.emojicenter.ui.theme.dimen16Dp
+import com.filipeoliveira.emojicenter.ui.theme.dimen8Dp
 
 @Composable
 fun SearchScreen(
@@ -19,36 +20,38 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     Surface(modifier = modifier) {
-        val uiState = viewModel.categoryList.collectAsState().value
+        val uiState = viewModel.categoryAndEmojis.collectAsState().value
 
-        when (uiState) {
-            is UIState.Success -> {
-                OnSuccess(modifier, uiState.data)
-            }
-
-            is UIState.Error -> {
-                OnError(modifier, uiState.error)
-            }
-
-            is UIState.Loading -> {
-                OnLoading(modifier)
-            }
+        when {
+            uiState.areCategoriesLoading -> OnCategoriesLoading()
+            uiState.error != null -> OnCategoriesError(uiState.error)
+            else -> OnCategoriesSuccess(uiState.categoryAndEmojisList)
         }
     }
 }
 
 @Composable
-fun OnSuccess(modifier: Modifier, data: List<Category>) {
-
+fun OnCategoriesSuccess(data: List<CategoryAndEmojis>, modifier: Modifier = Modifier) {
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(
+                horizontal = dimen16Dp
+            )
+    ) {
+        items(data.size) {
+            EmojiCategory(data[it])
+        }
+    }
 }
 
 @Composable
-fun OnError(modifier: Modifier, error: Throwable) {
+fun OnCategoriesError( error: Throwable, modifier: Modifier = Modifier) {
     TODO("Not yet implemented")
 }
 
 @Composable
-fun OnLoading(modifier: Modifier) {
+fun OnCategoriesLoading(modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -57,7 +60,16 @@ fun OnLoading(modifier: Modifier) {
             )
     ) {
         items(20) {
-            EmojiCategory(null, listOf())
+            EmojiCategory(
+                CategoryAndEmojis(
+                    title = "",
+                    isTitleLoading = true,
+                    areEmojisLoading = true,
+                    emojis = listOf()
+                )
+            )
+
+            Spacer(modifier = Modifier.height(dimen8Dp))
         }
     }
 }

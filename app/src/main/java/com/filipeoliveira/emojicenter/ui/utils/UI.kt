@@ -1,6 +1,7 @@
 package com.filipeoliveira.emojicenter.ui.utils
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -15,7 +16,10 @@ fun ShimmerText(
 ) {
     Row(
         modifier = modifier
-            .shimmerEffect()
+            .shimmerEffect(
+                gradientLight = MaterialTheme.colorScheme.surfaceVariant,
+                gradientDark = MaterialTheme.colorScheme.inverseOnSurface,
+            )
     ) {
         style?.let {
             EmojiText(
