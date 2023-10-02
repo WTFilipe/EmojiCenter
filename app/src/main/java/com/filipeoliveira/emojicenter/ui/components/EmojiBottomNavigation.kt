@@ -7,10 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.filipeoliveira.emojicenter.ui.screens.Screens
 
 @Composable
@@ -42,4 +44,15 @@ fun EmojiBottomNavigation(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun EmojiBottomNavigationPreview() {
+    val screensInBottomNav = listOf(
+        Screens.Home,
+        Screens.Favorites,
+        Screens.Search
+    )
+    EmojiBottomNavigation(rememberNavController(), screensInBottomNav)
 }
