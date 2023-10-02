@@ -2,7 +2,7 @@ package com.filipeoliveira.emojicenter.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.filipeoliveira.emojicenter.data.Emoji
+import com.filipeoliveira.emojicenter.domain.model.Emoji
 import com.filipeoliveira.emojicenter.domain.IGetEmojisUseCase
 import com.filipeoliveira.emojicenter.domain.Result
 import com.filipeoliveira.emojicenter.ui.UIState

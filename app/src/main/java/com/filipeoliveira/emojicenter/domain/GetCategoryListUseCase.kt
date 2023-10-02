@@ -1,6 +1,6 @@
 package com.filipeoliveira.emojicenter.domain
 
-import com.filipeoliveira.emojicenter.data.Category
+import com.filipeoliveira.emojicenter.domain.model.Category
 import com.filipeoliveira.emojicenter.data.IEmojiRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

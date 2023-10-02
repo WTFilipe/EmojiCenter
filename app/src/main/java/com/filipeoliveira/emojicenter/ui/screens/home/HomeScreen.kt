@@ -11,7 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.filipeoliveira.emojicenter.data.Emoji
+import com.filipeoliveira.emojicenter.domain.model.Emoji
 import com.filipeoliveira.emojicenter.ui.components.EmojiItemLeftLayout
 import com.filipeoliveira.emojicenter.ui.components.EmojiItemRightLayout
 import com.filipeoliveira.emojicenter.ui.UIState
@@ -32,7 +32,7 @@ fun HomeScreen(
 
         when(uiState){
             is UIState.Success -> {
-                OnSuccess(uiState.data)
+                OnSuccess(modifier, uiState.data)
             }
             is UIState.Error -> {
                 OnError(modifier, uiState.error)
@@ -45,9 +45,9 @@ fun HomeScreen(
 }
 
 @Composable
-fun OnSuccess(data: List<Emoji>) {
+private fun OnSuccess(modifier: Modifier, data: List<Emoji>) {
     LazyColumn (
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(
                 horizontal = dimen16Dp
@@ -66,7 +66,7 @@ fun OnSuccess(data: List<Emoji>) {
 }
 
 @Composable
-fun OnLoading(modifier: Modifier = Modifier) {
+private fun OnLoading(modifier: Modifier = Modifier) {
     LazyColumn (
         modifier = modifier
             .fillMaxSize()
@@ -82,7 +82,7 @@ fun OnLoading(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun OnError(modifier: Modifier = Modifier, errors: Throwable) {
+private fun OnError(modifier: Modifier = Modifier, errors: Throwable) {
     EmojiError(modifier) {
         EmojiText(text = "Erro")
     }
@@ -90,7 +90,7 @@ fun OnError(modifier: Modifier = Modifier, errors: Throwable) {
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
+private fun HomeScreenPreview() {
     EmojiCenterTheme {
         HomeScreen()
     }

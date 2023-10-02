@@ -1,6 +1,6 @@
 package com.filipeoliveira.emojicenter.data.remote.model
 
-import com.filipeoliveira.emojicenter.data.Emoji
+import com.filipeoliveira.emojicenter.domain.model.Emoji
 
 data class EmojiRemote(
     val character: String?,

@@ -1,4 +1,4 @@
-package com.filipeoliveira.emojicenter.data
+package com.filipeoliveira.emojicenter.domain.model
 
 data class Category(
     val slug: String?,

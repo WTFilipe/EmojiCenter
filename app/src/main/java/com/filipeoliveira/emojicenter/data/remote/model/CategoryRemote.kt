@@ -1,6 +1,6 @@
 package com.filipeoliveira.emojicenter.data.remote.model
 
-import com.filipeoliveira.emojicenter.data.Category
+import com.filipeoliveira.emojicenter.domain.model.Category
 
 data class CategoryRemote(
     val slug: String?,

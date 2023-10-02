@@ -6,7 +6,11 @@ import com.filipeoliveira.emojicenter.data.remote.EmojiRemoteData
 import com.filipeoliveira.emojicenter.data.remote.EmojiService
 import com.filipeoliveira.emojicenter.data.remote.IEmojiRemoteData
 import com.filipeoliveira.emojicenter.data.remote.RetrofitConfig
+import com.filipeoliveira.emojicenter.domain.GetCategoryListUseCase
+import com.filipeoliveira.emojicenter.domain.GetEmojiByCategoryUseCase
 import com.filipeoliveira.emojicenter.domain.GetEmojisUseCase
+import com.filipeoliveira.emojicenter.domain.IGetCategoryListUseCase
+import com.filipeoliveira.emojicenter.domain.IGetEmojiByCategoryUseCase
 import com.filipeoliveira.emojicenter.domain.IGetEmojisUseCase
 import dagger.Module
 import dagger.Provides
@@ -40,6 +44,18 @@ object DataModule {
     @Singleton
     fun providesGetEmojiUseCase(repository: IEmojiRepository) : IGetEmojisUseCase {
         return GetEmojisUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGetCategoryListUseCase(repository: IEmojiRepository) : IGetCategoryListUseCase {
+        return GetCategoryListUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGetEmojisByCategoryUseCase(repository: IEmojiRepository) : IGetEmojiByCategoryUseCase {
+        return GetEmojiByCategoryUseCase(repository)
     }
 
 }
