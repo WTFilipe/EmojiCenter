@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.filipeoliveira.emojicenter.domain.IGetCategoryListUseCase
 import com.filipeoliveira.emojicenter.domain.IGetEmojiByCategoryUseCase
+import com.filipeoliveira.emojicenter.domain.IRefreshCategoriesUseCase
 import com.filipeoliveira.emojicenter.domain.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val getCategoryListUseCase: IGetCategoryListUseCase,
     private val getEmojiByCategoryUseCase: IGetEmojiByCategoryUseCase,
-) : ViewModel() {
+    private val refreshCategoriesUseCase: IRefreshCategoriesUseCase,
+) : ViewModel(), ISearchViewModel{
 
     private var _categoryAndEmojis = MutableStateFlow(
         SearchScreenModel(
@@ -29,10 +31,28 @@ class SearchViewModel @Inject constructor(
         get() = _categoryAndEmojis
 
     init {
+        this.refreshCategories()
         this.getCategoryList()
     }
-
-    private fun getCategoryList() {
+    override fun refreshCategories(){
+        viewModelScope.launch(Dispatchers.IO) {
+            _categoryAndEmojis.value = _categoryAndEmojis.value.copy(
+                areCategoriesLoading = true
+            )
+            refreshCategoriesUseCase.refreshCategories()
+                .catch {
+                    _categoryAndEmojis.value = _categoryAndEmojis.value.copy(
+                        error = it
+                    )
+                }
+                .collect {
+                    _categoryAndEmojis.value = _categoryAndEmojis.value.copy(
+                        areCategoriesLoading = false
+                    )
+                }
+        }
+    }
+    override fun getCategoryList() {
         viewModelScope.launch(Dispatchers.IO) {
             _categoryAndEmojis.value = SearchScreenModel(
                 categoryAndEmojisList = listOf(),
@@ -62,9 +82,12 @@ class SearchViewModel @Inject constructor(
                                 areCategoriesLoading = false
                             )
 
-                            for (category in list.data) {
-                                category.slug?.let { getEmojisByCategory(it) }
+                            for (category in list.data){
+                                category.slug?.takeIf { it.isNotBlank() }?.let {
+                                    getEmojisByCategory(it)
+                                }
                             }
+
                         }
 
                         is Result.Error -> _categoryAndEmojis.value = SearchScreenModel(
@@ -77,7 +100,7 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    private fun getEmojisByCategory(slug: String) {
+    override fun getEmojisByCategory(slug: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _categoryAndEmojis.value = categoryAndEmojis.value.copy(
                 categoryAndEmojisList = categoryAndEmojis.value.categoryAndEmojisList.map {

@@ -1,6 +1,6 @@
 package com.filipeoliveira.emojicenter.data.remote.model
 
-import com.filipeoliveira.emojicenter.domain.model.Emoji
+import com.filipeoliveira.emojicenter.data.local.model.EmojiDB
 
 data class EmojiRemote(
     val character: String?,
@@ -10,5 +10,11 @@ data class EmojiRemote(
     val subGroup: String?,
     val unicodeName: String?
 ) {
-    fun toEmoji() = Emoji(character, codePoint, group, slug, subGroup, unicodeName)
+    fun toEmojiDb() = EmojiDB(
+        slug ?: "",
+        unicodeName ?: "",
+        character ?: "",
+        subGroup ?: "",
+        codePoint ?: "",
+        group ?: "")
 }

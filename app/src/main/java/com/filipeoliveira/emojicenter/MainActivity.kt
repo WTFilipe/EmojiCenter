@@ -29,7 +29,6 @@ class MainActivity : ComponentActivity() {
 
                 val screensInBottomNav = listOf(
                     Screens.Home,
-                    Screens.Favorites,
                     Screens.Search
                 )
 

@@ -101,7 +101,7 @@ dependencies {
 
     //Hilt - Used for Dependence Injection
     implementation("com.google.dagger:hilt-android:2.46.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.46.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.46.1") //Do not change to kps, causing crash
 
     //Compose
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
@@ -117,7 +117,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-
     //Retrofit - API Calls
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -125,5 +124,11 @@ dependencies {
 
     //Navigation - Compose
     implementation("androidx.navigation:navigation-compose:2.7.3")
+
+    //Room Dabatase
+    implementation("androidx.room:room-runtime:2.5.2")
+    implementation("androidx.room:room-ktx:2.5.2")
+    kapt("androidx.room:room-compiler:2.5.2") // Do not change to kps, causing crash
+
 }
 

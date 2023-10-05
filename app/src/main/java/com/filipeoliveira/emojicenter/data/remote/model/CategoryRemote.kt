@@ -1,10 +1,9 @@
 package com.filipeoliveira.emojicenter.data.remote.model
 
-import com.filipeoliveira.emojicenter.domain.model.Category
+import com.filipeoliveira.emojicenter.data.local.model.CategoryDB
 
 data class CategoryRemote(
     val slug: String?,
-    val subCategories: List<String?>?
 ) {
-    fun toCategory() = Category(slug, subCategories)
+    fun toCategoryDb() = CategoryDB(slug ?: "")
 }

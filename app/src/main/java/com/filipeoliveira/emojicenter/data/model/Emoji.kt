@@ -1,4 +1,4 @@
-package com.filipeoliveira.emojicenter.domain.model
+package com.filipeoliveira.emojicenter.data.model
 
 data class Emoji(
     val character: String?,

@@ -1,6 +1,6 @@
 package com.filipeoliveira.emojicenter.ui.screens.search
 
-import com.filipeoliveira.emojicenter.domain.model.Emoji
+import com.filipeoliveira.emojicenter.data.model.Emoji
 
 data class SearchScreenModel(
     val categoryAndEmojisList : List<CategoryAndEmojis>,

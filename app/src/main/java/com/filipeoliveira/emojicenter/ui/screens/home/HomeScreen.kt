@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.filipeoliveira.emojicenter.domain.model.Emoji
+import com.filipeoliveira.emojicenter.data.model.Emoji
 import com.filipeoliveira.emojicenter.ui.components.EmojiItemLeftLayout
 import com.filipeoliveira.emojicenter.ui.components.EmojiItemRightLayout
 import com.filipeoliveira.emojicenter.ui.UIState

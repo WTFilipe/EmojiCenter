@@ -47,7 +47,6 @@ fun OnCategoriesSuccess(data: List<CategoryAndEmojis>, modifier: Modifier = Modi
 
 @Composable
 fun OnCategoriesError( error: Throwable, modifier: Modifier = Modifier) {
-    TODO("Not yet implemented")
 }
 
 @Composable
