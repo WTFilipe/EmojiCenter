@@ -99,7 +99,6 @@ class SearchViewModel @Inject constructor(
                 }
         }
     }
-
     override fun getEmojisByCategory(slug: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _categoryAndEmojis.value = categoryAndEmojis.value.copy(
