@@ -9,7 +9,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.filipeoliveira.emojicenter.data.model.Emoji
 import com.filipeoliveira.emojicenter.ui.components.EmojiCategory
 import com.filipeoliveira.emojicenter.ui.theme.dimen16Dp
 import com.filipeoliveira.emojicenter.ui.theme.dimen8Dp
@@ -35,9 +37,6 @@ fun OnCategoriesSuccess(data: List<CategoryAndEmojis>, modifier: Modifier = Modi
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(
-                horizontal = dimen16Dp
-            )
     ) {
         items(data.size) {
             EmojiCategory(data[it])
@@ -73,5 +72,39 @@ fun OnCategoriesLoading(modifier: Modifier = Modifier) {
     }
 }
 
+@Preview(showBackground = true, heightDp = 150)
+@Composable
+fun CategoriesLoadingPreview(){
+    OnCategoriesLoading()
+}
 
-
+@Preview(showBackground = true)
+@Composable
+fun CategoriesSuccessPreview(){
+    OnCategoriesSuccess(data = listOf(
+        CategoryAndEmojis(
+            title = "Categoria",
+            emojis = List(50){
+                Emoji(
+                    character = "\ud83d\ude03",
+                    slug = "grinning-face-with-big-eyes",
+                    unicodeName = "grinning face with big eyes"
+                )
+            },
+            areEmojisLoading = false,
+            isTitleLoading = false
+        ),
+        CategoryAndEmojis(
+            title = "Categoria",
+            emojis = List(50){
+                Emoji(
+                    character = "\ud83d\ude03",
+                    slug = "grinning-face-with-big-eyes",
+                    unicodeName = "grinning face with big eyes"
+                )
+            },
+            areEmojisLoading = false,
+            isTitleLoading = false
+        )
+    ))
+}
