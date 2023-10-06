@@ -1,5 +1,6 @@
 package com.filipeoliveira.emojicenter.ui.screens.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,10 +12,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.filipeoliveira.emojicenter.R
 import com.filipeoliveira.emojicenter.data.model.Emoji
+import com.filipeoliveira.emojicenter.domain.errors.EmptyResponseException
 import com.filipeoliveira.emojicenter.ui.components.EmojiItemLeftLayout
 import com.filipeoliveira.emojicenter.ui.components.EmojiItemRightLayout
 import com.filipeoliveira.emojicenter.ui.UIState
@@ -39,7 +43,9 @@ fun HomeScreen(
             }
 
             is UIState.Error -> {
-                OnError(modifier, uiState.error)
+                OnError(modifier, uiState.error){
+                    viewModel.refreshEmojis()
+                }
             }
 
             is UIState.Loading -> {
@@ -88,9 +94,22 @@ private fun OnLoading(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun OnError(modifier: Modifier = Modifier, error: Throwable) {
-    EmojiError(modifier) {
-        EmojiText(text = "Erro")
+private fun OnError(
+    modifier: Modifier = Modifier,
+    error: Throwable,
+    onErrorClicked: () -> Unit
+) {
+    val errorText = when(error) {
+        is EmptyResponseException -> stringResource(R.string.empty_response)
+        else -> stringResource(R.string.generic_error)
+    }
+    EmojiError(
+        modifier = modifier
+            .clickable {
+                onErrorClicked()
+            }
+    ) {
+        EmojiText(text = errorText)
     }
 }
 
