@@ -1,5 +1,6 @@
 package com.filipeoliveira.emojicenter.ui.screens.search
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -36,7 +37,8 @@ fun SearchScreen(
 fun OnCategoriesSuccess(data: List<CategoryAndEmojis>, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        contentPadding = PaddingValues(vertical = dimen16Dp)
     ) {
         items(data.size) {
             EmojiCategory(data[it])
@@ -55,7 +57,8 @@ fun OnCategoriesLoading(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .padding(
                 horizontal = dimen16Dp
-            )
+            ),
+        contentPadding = PaddingValues(vertical = dimen16Dp)
     ) {
         items(20) {
             EmojiCategory(

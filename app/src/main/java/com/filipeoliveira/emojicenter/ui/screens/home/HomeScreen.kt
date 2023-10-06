@@ -1,5 +1,6 @@
 package com.filipeoliveira.emojicenter.ui.screens.home
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -49,13 +50,14 @@ fun HomeScreen(
 }
 
 @Composable
-private fun OnSuccess(modifier: Modifier, data: List<Emoji>) {
+private fun OnSuccess(modifier: Modifier = Modifier, data: List<Emoji>) {
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
             .padding(
                 horizontal = dimen16Dp
-            )
+            ),
+        contentPadding = PaddingValues(vertical = dimen16Dp)
     ) {
         items(data.size) { index ->
             if (index % 2 == 0) {
@@ -86,7 +88,7 @@ private fun OnLoading(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun OnError(modifier: Modifier = Modifier, errors: Throwable) {
+private fun OnError(modifier: Modifier = Modifier, error: Throwable) {
     EmojiError(modifier) {
         EmojiText(text = "Erro")
     }
@@ -94,8 +96,16 @@ private fun OnError(modifier: Modifier = Modifier, errors: Throwable) {
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeScreenPreview() {
+private fun OnSuccessPreview() {
     EmojiCenterTheme {
-        HomeScreen()
+        OnSuccess(
+            data = List(10){
+                Emoji(
+                    character = "\ud83d\ude03",
+                    slug = "grinning-face-with-big-eyes",
+                    unicodeName = "grinning face with big eyes"
+                )
+            }
+        )
     }
 }

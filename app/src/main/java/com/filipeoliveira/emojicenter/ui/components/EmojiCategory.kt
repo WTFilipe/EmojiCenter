@@ -96,7 +96,7 @@ fun EmojiCategoryPreview() {
     EmojiCategory(
         CategoryAndEmojis(
             title = "Categoria",
-            emojis = List(50){
+            emojis = List(10){
                 Emoji(
                     character = "\ud83d\ude03",
                     slug = "grinning-face-with-big-eyes",
