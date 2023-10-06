@@ -2,4 +2,5 @@
 <resources>
 
     <style name="Theme.EmojiCenter" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.EmojiCenter.Splash" parent="Theme.SplashScreen"/>
 </resources>

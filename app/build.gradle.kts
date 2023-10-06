@@ -130,5 +130,8 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.2")
     kapt("androidx.room:room-compiler:2.5.2") // Do not change to kps, causing crash
 
+    //Splash API
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
 }
 
