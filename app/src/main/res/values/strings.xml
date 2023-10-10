@@ -5,6 +5,7 @@
     <string name="title_favorite">Favoritos</string>
     <string name="title_search">Busca</string>
     <string name="search">Search</string>
+    <string name="generic_error">Ops, an unexpected error occurred. Tap to try again.</string>
     <string name="empty_response">No items found to be shown</string>
-    <string name="generic_error">Ops, an unexpected error ocurred. Tap to try again.</string>
+    <string name="short_input_feedback">Search will begin after you insert 3 or more characters</string>
 </resources>

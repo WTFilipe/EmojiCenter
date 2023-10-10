@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.filipeoliveira.emojicenter.domain.IGetCategoryListUseCase
 import com.filipeoliveira.emojicenter.domain.IGetEmojiByCategoryUseCase
 import com.filipeoliveira.emojicenter.domain.IRefreshCategoriesUseCase
+import com.filipeoliveira.emojicenter.domain.ISearchEmojiUseCase
 import com.filipeoliveira.emojicenter.domain.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,12 +20,14 @@ class SearchViewModel @Inject constructor(
     private val getCategoryListUseCase: IGetCategoryListUseCase,
     private val getEmojiByCategoryUseCase: IGetEmojiByCategoryUseCase,
     private val refreshCategoriesUseCase: IRefreshCategoriesUseCase,
+    private val searchEmojiUseCase: ISearchEmojiUseCase
 ) : ViewModel(), ISearchViewModel{
 
     private var _categoryAndEmojis = MutableStateFlow(
         SearchScreenModel(
             categoryAndEmojisList = listOf(),
-            areCategoriesLoading = true
+            areCategoriesLoading = true,
+            searchResultList = emptyList()
         )
     )
     val categoryAndEmojis: StateFlow<SearchScreenModel>
@@ -56,7 +59,8 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _categoryAndEmojis.value = SearchScreenModel(
                 categoryAndEmojisList = listOf(),
-                areCategoriesLoading = true
+                areCategoriesLoading = true,
+                searchResultList = emptyList()
             )
 
             getCategoryListUseCase.getCategoryList()
@@ -64,7 +68,8 @@ class SearchViewModel @Inject constructor(
                     _categoryAndEmojis.value = SearchScreenModel(
                         categoryAndEmojisList = listOf(),
                         areCategoriesLoading = false,
-                        error = it
+                        error = it,
+                        searchResultList = emptyList()
                     )
                 }
                 .collect { list ->
@@ -79,7 +84,8 @@ class SearchViewModel @Inject constructor(
                                         areEmojisLoading = true
                                     )
                                 },
-                                areCategoriesLoading = false
+                                areCategoriesLoading = false,
+                                searchResultList = emptyList()
                             )
 
                             for (category in list.data){
@@ -93,7 +99,8 @@ class SearchViewModel @Inject constructor(
                         is Result.Error -> _categoryAndEmojis.value = SearchScreenModel(
                             categoryAndEmojisList = listOf(),
                             areCategoriesLoading = false,
-                            error = list.error
+                            error = list.error,
+                            searchResultList = emptyList()
                         )
                     }
                 }
@@ -149,6 +156,37 @@ class SearchViewModel @Inject constructor(
                                     it.copy()
                                 }
                             }
+                        )
+                    }
+                }
+        }
+    }
+    override fun searchEmojis(query: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _categoryAndEmojis.value = SearchScreenModel(
+                categoryAndEmojisList = listOf(),
+                areCategoriesLoading = true,
+                searchResultList = emptyList()
+            )
+            searchEmojiUseCase.searchEmojis(query)
+                .catch {
+                    _categoryAndEmojis.value = SearchScreenModel(
+                        areCategoriesLoading = false,
+                        error = it
+                    )
+                }
+                .collect { result ->
+                    when(result){
+                        is Result.Success -> _categoryAndEmojis.value = _categoryAndEmojis.value.copy(
+                            searchResultList = result.data,
+                            areCategoriesLoading = false,
+                            categoryAndEmojisList = emptyList()
+                        )
+                        is Result.Error -> _categoryAndEmojis.value = _categoryAndEmojis.value.copy(
+                            searchResultList = emptyList(),
+                            areCategoriesLoading = false,
+                            categoryAndEmojisList = emptyList(),
+                            error = result.error
                         )
                     }
                 }

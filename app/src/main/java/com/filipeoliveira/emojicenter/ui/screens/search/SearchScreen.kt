@@ -1,5 +1,6 @@
 package com.filipeoliveira.emojicenter.ui.screens.search
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -7,19 +8,26 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.filipeoliveira.emojicenter.R
 import com.filipeoliveira.emojicenter.data.model.Emoji
+import com.filipeoliveira.emojicenter.domain.errors.EmptyResponseException
+import com.filipeoliveira.emojicenter.domain.errors.ShortInputException
 import com.filipeoliveira.emojicenter.ui.components.EmojiCategory
+import com.filipeoliveira.emojicenter.ui.components.EmojiItemRightLayout
 import com.filipeoliveira.emojicenter.ui.components.EmojiSearchBar
+import com.filipeoliveira.emojicenter.ui.components.EmojiText
 import com.filipeoliveira.emojicenter.ui.theme.dimen16Dp
 import com.filipeoliveira.emojicenter.ui.theme.dimen8Dp
 
@@ -29,13 +37,13 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     Column(modifier = modifier) {
-        SearchScreenSearchBar()
+        SearchScreenSearchBar(viewModel = viewModel)
         SearchScreenContent(viewModel)
     }
 }
 
 @Composable
-fun SearchScreenSearchBar(modifier: Modifier = Modifier) {
+fun SearchScreenSearchBar(modifier: Modifier = Modifier, viewModel: SearchViewModel) {
     var searchFieldValue by rememberSaveable{
         mutableStateOf("")
     }
@@ -45,6 +53,11 @@ fun SearchScreenSearchBar(modifier: Modifier = Modifier) {
             .padding(start = dimen16Dp, top = dimen16Dp, end = dimen16Dp)
     ) { query ->
         searchFieldValue = query
+        if (query.isEmpty()){
+            viewModel.getCategoryList()
+        } else {
+            viewModel.searchEmojis(query)
+        }
     }
 }
 
@@ -55,7 +68,22 @@ private fun SearchScreenContent(viewModel: SearchViewModel) {
     when {
         uiState.areCategoriesLoading -> OnCategoriesLoading()
         uiState.error != null -> OnCategoriesError(uiState.error)
-        else -> OnCategoriesSuccess(uiState.categoryAndEmojisList)
+        uiState.categoryAndEmojisList.isNotEmpty() -> OnCategoriesSuccess(uiState.categoryAndEmojisList)
+        uiState.searchResultList.isNotEmpty() -> OnSearchResultSuccess(uiState.searchResultList)
+    }
+}
+
+@Composable
+fun OnSearchResultSuccess(data: List<Emoji>, modifier: Modifier = Modifier) {
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize(),
+        contentPadding = PaddingValues(vertical = dimen16Dp)
+    ) {
+        items(data.size) {
+            EmojiItemRightLayout(data[it])
+            Spacer(modifier = Modifier.height(dimen8Dp))
+        }
     }
 }
 
@@ -74,6 +102,23 @@ fun OnCategoriesSuccess(data: List<CategoryAndEmojis>, modifier: Modifier = Modi
 
 @Composable
 fun OnCategoriesError(error: Throwable, modifier: Modifier = Modifier) {
+    val errorFeedback = when(error){
+        is ShortInputException -> stringResource(R.string.short_input_feedback)
+        is EmptyResponseException -> stringResource(R.string.empty_response)
+        else -> stringResource(R.string.generic_error)
+    }
+
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .fillMaxSize()
+            .padding(dimen16Dp)
+    ) {
+        EmojiText(
+            text = errorFeedback,
+            textAlign = TextAlign.Center
+        )
+    }
 }
 
 @Composable

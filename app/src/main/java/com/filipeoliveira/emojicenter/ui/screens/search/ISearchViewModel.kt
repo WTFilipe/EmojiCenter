@@ -7,4 +7,6 @@ interface ISearchViewModel{
     fun getCategoryList()
 
     fun getEmojisByCategory(slug: String)
+
+    fun searchEmojis(query: String)
 }

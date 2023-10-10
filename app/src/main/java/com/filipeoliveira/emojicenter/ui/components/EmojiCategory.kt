@@ -26,7 +26,10 @@ fun EmojiCategory(
     categoryAndEmojis: CategoryAndEmojis,
     modifier: Modifier = Modifier
 ) {
-    if (categoryAndEmojis.emojisError != null) return
+    if (
+        categoryAndEmojis.emojisError != null
+        || categoryAndEmojis.emojis.isEmpty()
+    ) return
 
     Column(
         modifier = modifier

@@ -3,7 +3,8 @@ package com.filipeoliveira.emojicenter.ui.screens.search
 import com.filipeoliveira.emojicenter.data.model.Emoji
 
 data class SearchScreenModel(
-    val categoryAndEmojisList : List<CategoryAndEmojis>,
+    val categoryAndEmojisList : List<CategoryAndEmojis> = emptyList(),
+    val searchResultList : List<Emoji> = emptyList(),
     val areCategoriesLoading: Boolean,
     val error: Throwable? = null
 )

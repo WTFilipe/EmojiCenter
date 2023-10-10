@@ -14,8 +14,10 @@ import com.filipeoliveira.emojicenter.domain.IGetEmojiByCategoryUseCase
 import com.filipeoliveira.emojicenter.domain.IGetEmojisUseCase
 import com.filipeoliveira.emojicenter.domain.IRefreshCategoriesUseCase
 import com.filipeoliveira.emojicenter.domain.IRefreshEmojiUseCase
+import com.filipeoliveira.emojicenter.domain.ISearchEmojiUseCase
 import com.filipeoliveira.emojicenter.domain.RefreshCategoriesUseCase
 import com.filipeoliveira.emojicenter.domain.RefreshEmojisUseCase
+import com.filipeoliveira.emojicenter.domain.SearchEmojiUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -40,4 +42,6 @@ abstract class DataModule {
     abstract fun providesRefreshEmojisUseCase(refreshEmojisUseCase: RefreshEmojisUseCase) : IRefreshEmojiUseCase
     @Binds
     abstract fun providesRefreshCategoriesUseCase(refreshCategoriesUseCase: RefreshCategoriesUseCase) : IRefreshCategoriesUseCase
+    @Binds
+    abstract fun providesSearchEmojisUseCase(searchEmojiUseCase: SearchEmojiUseCase) : ISearchEmojiUseCase
 }
