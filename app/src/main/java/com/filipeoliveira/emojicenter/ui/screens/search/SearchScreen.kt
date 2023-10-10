@@ -1,5 +1,6 @@
 package com.filipeoliveira.emojicenter.ui.screens.search
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,7 +17,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -75,13 +80,19 @@ private fun SearchScreenContent(viewModel: SearchViewModel) {
 
 @Composable
 fun OnSearchResultSuccess(data: List<Emoji>, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    val clipboardManager: ClipboardManager = LocalClipboardManager.current
+
     LazyColumn(
         modifier = modifier
             .fillMaxSize(),
         contentPadding = PaddingValues(vertical = dimen16Dp)
     ) {
         items(data.size) {
-            EmojiItemRightLayout(data[it])
+            EmojiItemRightLayout(data[it]) {
+                clipboardManager.setText(AnnotatedString(it))
+                Toast.makeText(context, context.getString(R.string.emoji_copied_to_clipboard, it), Toast.LENGTH_SHORT).show()
+            }
             Spacer(modifier = Modifier.height(dimen8Dp))
         }
     }
@@ -89,13 +100,19 @@ fun OnSearchResultSuccess(data: List<Emoji>, modifier: Modifier = Modifier) {
 
 @Composable
 fun OnCategoriesSuccess(data: List<CategoryAndEmojis>, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    val clipboardManager: ClipboardManager = LocalClipboardManager.current
+
     LazyColumn(
         modifier = modifier
             .fillMaxSize(),
         contentPadding = PaddingValues(vertical = dimen16Dp)
     ) {
         items(data.size) {
-            EmojiCategory(data[it])
+            EmojiCategory(data[it]) {
+                clipboardManager.setText(AnnotatedString(it))
+                Toast.makeText(context, context.getString(R.string.emoji_copied_to_clipboard, it), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.filipeoliveira.emojicenter.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,7 +25,8 @@ import com.filipeoliveira.emojicenter.ui.utils.ShimmerText
 @Composable
 fun EmojiCategory(
     categoryAndEmojis: CategoryAndEmojis,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onEmojiClicked: (String) -> Unit = {}
 ) {
     if (
         categoryAndEmojis.emojisError != null
@@ -55,7 +57,7 @@ fun EmojiCategory(
                 fontSize = 50.sp
             )
         } else {
-            EmojiList(emojiList = categoryAndEmojis.emojis)
+            EmojiList(emojiList = categoryAndEmojis.emojis, onEmojiClicked = onEmojiClicked)
         }
 
 
@@ -63,7 +65,7 @@ fun EmojiCategory(
 }
 
 @Composable
-private fun EmojiList(emojiList: List<Emoji>) {
+private fun EmojiList(emojiList: List<Emoji>, onEmojiClicked: (String) -> Unit = {}) {
     LazyRow(
         contentPadding = PaddingValues(horizontal = dimen16Dp),
         horizontalArrangement = Arrangement.spacedBy(dimen8Dp)
@@ -72,7 +74,11 @@ private fun EmojiList(emojiList: List<Emoji>) {
             emojiList[it].character?.let { emojiUnicode ->
                 EmojiText(
                     text = emojiUnicode,
-                    fontSize = 50.sp
+                    fontSize = 50.sp,
+                    modifier = Modifier
+                        .clickable {
+                            onEmojiClicked(emojiUnicode)
+                        }
                 )
             }
         }

@@ -1,6 +1,7 @@
 package com.filipeoliveira.emojicenter.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,15 +24,20 @@ import com.filipeoliveira.emojicenter.ui.theme.dimen8Dp
 @Composable
 fun EmojiItemRightLayout(
     emoji: Emoji?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCardClicked: (String) -> Unit = {}
 ) {
     Card(
         elevation = CardDefaults.cardElevation(
             defaultElevation = dimen8Dp
-        )
+        ),
+        modifier = modifier
+            .clickable {
+                emoji?.character?.let { onCardClicked(it) }
+            }
     ) {
         Row(
-            modifier
+            Modifier
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.surface),
             verticalAlignment = Alignment.CenterVertically
@@ -52,7 +58,8 @@ fun EmojiItemRightLayout(
                         shape = RoundedCornerShape(
                             topStart = dimen40Dp,
                             bottomStart = dimen40Dp
-                        ))
+                        )
+                    )
                     .padding(
                         horizontal = dimen20Dp,
                         vertical = dimen8Dp
@@ -71,15 +78,22 @@ fun EmojiItemRightLayout(
 @Composable
 fun EmojiItemLeftLayout(
     emoji: Emoji?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCardClicked: (String) -> Unit = {}
 ) {
-    Card (
-      elevation = CardDefaults.cardElevation(
-          defaultElevation = dimen8Dp
-      )
-    ){
+    Card(
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = dimen8Dp,
+        ),
+        modifier = modifier
+            .clickable {
+                emoji?.character?.let {
+                    onCardClicked(it)
+                }
+            }
+    ) {
         Row(
-            modifier
+            Modifier
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.surface),
             verticalAlignment = Alignment.CenterVertically
@@ -91,10 +105,12 @@ fun EmojiItemLeftLayout(
                         shape = RoundedCornerShape(
                             topEnd = dimen40Dp,
                             bottomEnd = dimen40Dp
-                        ))
+                        )
+                    )
                     .padding(
                         horizontal = dimen20Dp,
-                        vertical = dimen8Dp)
+                        vertical = dimen8Dp
+                    )
 
             ) {
                 EmojiText(
@@ -106,8 +122,7 @@ fun EmojiItemLeftLayout(
                 text = emoji?.unicodeName ?: "",
                 modifier = Modifier
                     .weight(1F)
-                    .padding(dimen8Dp)
-                ,
+                    .padding(dimen8Dp),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onBackground

@@ -1,5 +1,6 @@
 package com.filipeoliveira.emojicenter.ui.screens.home
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -12,7 +13,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -57,6 +62,9 @@ fun HomeScreen(
 
 @Composable
 private fun OnSuccess(modifier: Modifier = Modifier, data: List<Emoji>) {
+    val context = LocalContext.current
+    val clipboardManager: ClipboardManager = LocalClipboardManager.current
+
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -67,9 +75,15 @@ private fun OnSuccess(modifier: Modifier = Modifier, data: List<Emoji>) {
     ) {
         items(data.size) { index ->
             if (index % 2 == 0) {
-                EmojiItemRightLayout(emoji = data[index])
+                EmojiItemRightLayout(emoji = data[index]) {
+                    clipboardManager.setText(AnnotatedString(it))
+                    Toast.makeText(context, context.getString(R.string.emoji_copied_to_clipboard, it), Toast.LENGTH_SHORT).show()
+                }
             } else {
-                EmojiItemLeftLayout(emoji = data[index])
+                EmojiItemLeftLayout(emoji = data[index]){
+                    clipboardManager.setText(AnnotatedString(it))
+                    Toast.makeText(context, context.getString(R.string.emoji_copied_to_clipboard, it), Toast.LENGTH_SHORT).show()
+                }
             }
 
             Spacer(modifier = Modifier.height(dimen16Dp))
