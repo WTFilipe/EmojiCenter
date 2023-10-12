@@ -1,7 +1,6 @@
 package com.filipeoliveira.emojicenter.di
 
 import com.filipeoliveira.emojicenter.data.EmojiRepository
-import com.filipeoliveira.emojicenter.data.IEmojiRepository
 import com.filipeoliveira.emojicenter.data.local.EmojiLocalData
 import com.filipeoliveira.emojicenter.data.local.IEmojiLocalData
 import com.filipeoliveira.emojicenter.data.remote.EmojiRemoteData
@@ -9,6 +8,7 @@ import com.filipeoliveira.emojicenter.data.remote.IEmojiRemoteData
 import com.filipeoliveira.emojicenter.domain.GetCategoryListUseCase
 import com.filipeoliveira.emojicenter.domain.GetEmojiByCategoryUseCase
 import com.filipeoliveira.emojicenter.domain.GetEmojisUseCase
+import com.filipeoliveira.emojicenter.domain.IEmojiRepository
 import com.filipeoliveira.emojicenter.domain.IGetCategoryListUseCase
 import com.filipeoliveira.emojicenter.domain.IGetEmojiByCategoryUseCase
 import com.filipeoliveira.emojicenter.domain.IGetEmojisUseCase

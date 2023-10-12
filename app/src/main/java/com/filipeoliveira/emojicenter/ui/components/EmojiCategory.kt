@@ -16,7 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.filipeoliveira.emojicenter.data.model.Emoji
+import com.filipeoliveira.emojicenter.domain.model.Emoji
 import com.filipeoliveira.emojicenter.ui.screens.search.CategoryAndEmojis
 import com.filipeoliveira.emojicenter.ui.theme.dimen16Dp
 import com.filipeoliveira.emojicenter.ui.theme.dimen8Dp

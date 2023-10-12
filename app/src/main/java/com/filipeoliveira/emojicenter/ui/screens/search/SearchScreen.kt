@@ -26,7 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.filipeoliveira.emojicenter.R
-import com.filipeoliveira.emojicenter.data.model.Emoji
+import com.filipeoliveira.emojicenter.domain.model.Emoji
 import com.filipeoliveira.emojicenter.domain.errors.EmptyResponseException
 import com.filipeoliveira.emojicenter.domain.errors.ShortInputException
 import com.filipeoliveira.emojicenter.ui.components.EmojiCategory
@@ -58,11 +58,7 @@ fun SearchScreenSearchBar(modifier: Modifier = Modifier, viewModel: SearchViewMo
             .padding(start = dimen16Dp, top = dimen16Dp, end = dimen16Dp)
     ) { query ->
         searchFieldValue = query
-        if (query.isEmpty()){
-            viewModel.getCategoryList()
-        } else {
-            viewModel.searchEmojis(query)
-        }
+        viewModel.searchEmojis(query)
     }
 }
 

@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "EmojiCenter"
 include(":app")
+include(":core:domain")
+include(":core:data")

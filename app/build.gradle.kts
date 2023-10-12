@@ -6,7 +6,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp").version("1.6.10-1.0.4")
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+
 }
 
 android {
@@ -46,7 +46,6 @@ android {
     }
     buildFeatures {
         compose = true
-        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -86,6 +85,9 @@ tasks.named("preBuild") {
 
 dependencies {
 
+    implementation(project(":core:domain"))
+    implementation(project(":core:data"))
+
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 
@@ -93,14 +95,9 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    //Retrofit - API Calls
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
-
     //Hilt - Used for Dependence Injection
     implementation("com.google.dagger:hilt-android:2.46.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     kapt("com.google.dagger:hilt-android-compiler:2.46.1") //Do not change to kps, causing crash
 
     //Compose
@@ -111,7 +108,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
@@ -119,11 +115,6 @@ dependencies {
 
     //Navigation - Compose
     implementation("androidx.navigation:navigation-compose:2.7.3")
-
-    //Room Dabatase
-    implementation("androidx.room:room-runtime:2.5.2")
-    implementation("androidx.room:room-ktx:2.5.2")
-    kapt("androidx.room:room-compiler:2.5.2") // Do not change to kps, causing crash
 
     //Splash API
     implementation("androidx.core:core-splashscreen:1.0.1")

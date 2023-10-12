@@ -2,7 +2,7 @@ package com.filipeoliveira.emojicenter.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.filipeoliveira.emojicenter.data.model.Emoji
+import com.filipeoliveira.emojicenter.domain.model.Emoji
 import com.filipeoliveira.emojicenter.domain.IGetEmojisUseCase
 import com.filipeoliveira.emojicenter.domain.IRefreshEmojiUseCase
 import com.filipeoliveira.emojicenter.domain.Result
@@ -17,8 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor (
-    private val getEmojisUseCase: IGetEmojisUseCase,
-    private val refreshEmojisUseCase: IRefreshEmojiUseCase,
+    private val getEmojisUseCase: com.filipeoliveira.emojicenter.domain.IGetEmojisUseCase,
+    private val refreshEmojisUseCase: com.filipeoliveira.emojicenter.domain.IRefreshEmojiUseCase,
 ) : ViewModel(), IHomeViewModel {
 
     private var _emojiList = MutableStateFlow<UIState<List<Emoji>>>(UIState.Loading)
@@ -52,8 +52,8 @@ class HomeViewModel @Inject constructor (
                 }
                 .collect { list ->
                     when (list) {
-                        is Result.Success -> _emojiList.value = UIState.Success(list.data)
-                        is Result.Error -> _emojiList.value = UIState.Error(list.error)
+                        is com.filipeoliveira.emojicenter.domain.Result.Success -> _emojiList.value = UIState.Success(list.data)
+                        is com.filipeoliveira.emojicenter.domain.Result.Error -> _emojiList.value = UIState.Error(list.error)
                     }
                 }
         }

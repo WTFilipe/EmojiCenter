@@ -6,7 +6,6 @@ import com.filipeoliveira.emojicenter.domain.IGetCategoryListUseCase
 import com.filipeoliveira.emojicenter.domain.IGetEmojiByCategoryUseCase
 import com.filipeoliveira.emojicenter.domain.IRefreshCategoriesUseCase
 import com.filipeoliveira.emojicenter.domain.ISearchEmojiUseCase
-import com.filipeoliveira.emojicenter.domain.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -74,7 +73,7 @@ class SearchViewModel @Inject constructor(
                 }
                 .collect { list ->
                     when (list) {
-                        is Result.Success -> {
+                        is com.filipeoliveira.emojicenter.domain.Result.Success -> {
                             _categoryAndEmojis.value = SearchScreenModel(
                                 categoryAndEmojisList = list.data.map {
                                     CategoryAndEmojis(
@@ -96,7 +95,7 @@ class SearchViewModel @Inject constructor(
 
                         }
 
-                        is Result.Error -> _categoryAndEmojis.value = SearchScreenModel(
+                        is com.filipeoliveira.emojicenter.domain.Result.Error -> _categoryAndEmojis.value = SearchScreenModel(
                             categoryAndEmojisList = listOf(),
                             areCategoriesLoading = false,
                             error = list.error,
@@ -131,7 +130,7 @@ class SearchViewModel @Inject constructor(
                 }
                 .collect { result ->
                     when (result) {
-                        is Result.Success -> _categoryAndEmojis.value =
+                        is com.filipeoliveira.emojicenter.domain.Result.Success -> _categoryAndEmojis.value =
                             categoryAndEmojis.value.copy(
                                 categoryAndEmojisList = categoryAndEmojis.value.categoryAndEmojisList.map {
                                     if (it.title == slug) {
@@ -145,7 +144,7 @@ class SearchViewModel @Inject constructor(
                                 },
                             )
 
-                        is Result.Error -> _categoryAndEmojis.value = categoryAndEmojis.value.copy(
+                        is com.filipeoliveira.emojicenter.domain.Result.Error -> _categoryAndEmojis.value = categoryAndEmojis.value.copy(
                             categoryAndEmojisList = categoryAndEmojis.value.categoryAndEmojisList.map {
                                 if (it.title == slug) {
                                     it.copy(
@@ -162,6 +161,10 @@ class SearchViewModel @Inject constructor(
         }
     }
     override fun searchEmojis(query: String) {
+        if (query.isEmpty()){
+            getCategoryList()
+            return
+        }
         viewModelScope.launch(Dispatchers.IO) {
             _categoryAndEmojis.value = SearchScreenModel(
                 categoryAndEmojisList = listOf(),
@@ -177,12 +180,12 @@ class SearchViewModel @Inject constructor(
                 }
                 .collect { result ->
                     when(result){
-                        is Result.Success -> _categoryAndEmojis.value = _categoryAndEmojis.value.copy(
+                        is com.filipeoliveira.emojicenter.domain.Result.Success -> _categoryAndEmojis.value = _categoryAndEmojis.value.copy(
                             searchResultList = result.data,
                             areCategoriesLoading = false,
                             categoryAndEmojisList = emptyList()
                         )
-                        is Result.Error -> _categoryAndEmojis.value = _categoryAndEmojis.value.copy(
+                        is com.filipeoliveira.emojicenter.domain.Result.Error -> _categoryAndEmojis.value = _categoryAndEmojis.value.copy(
                             searchResultList = emptyList(),
                             areCategoriesLoading = false,
                             categoryAndEmojisList = emptyList(),
